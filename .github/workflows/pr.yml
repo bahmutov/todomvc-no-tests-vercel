@@ -18,3 +18,8 @@ jobs:
           export VERCEL_TEAM_NAME=gleb-bahmutov
           export PREVIEW_URL=https://${VERCEL_PROJECT_NAME}-git-${GITHUB_HEAD_REF}-${VERCEL_TEAM_NAME}.vercel.app/
           echo "Vercel deployment URL is ${PREVIEW_URL}"
+
+          curl -u ${{ secrets.CIRCLE_CI_API_TOKEN }}: \
+            --data parameters[TEST_BRANCH]=${CIRCLE_BRANCH} \
+            --data parameters[TEST_URL]=${TEST_URL} \
+            https://circleci.com/api/v2/project/gh/bahmutov/todomvc-tests-circleci/pipeline
