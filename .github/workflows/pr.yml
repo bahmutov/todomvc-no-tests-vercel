@@ -19,8 +19,9 @@ jobs:
           export PREVIEW_URL=https://${VERCEL_PROJECT_NAME}-git-${GITHUB_HEAD_REF}-${VERCEL_TEAM_NAME}.vercel.app/
           echo "Vercel deployment URL is ${PREVIEW_URL}"
 
+          # --silent option to not print request progress
           curl -u ${{ secrets.CIRCLE_CI_API_TOKEN }}: \
-            --silent \ # do not print request progress
+            --silent \
             --data parameters[TEST_BRANCH]=${GITHUB_HEAD_REF} \
             --data parameters[TEST_URL]=${PREVIEW_URL} \
             https://circleci.com/api/v2/project/gh/bahmutov/todomvc-tests-circleci/pipeline
