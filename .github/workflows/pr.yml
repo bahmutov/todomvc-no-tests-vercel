@@ -20,6 +20,7 @@ jobs:
           echo "Vercel deployment URL is ${PREVIEW_URL}"
 
           curl -u ${{ secrets.CIRCLE_CI_API_TOKEN }}: \
-            --data parameters[TEST_BRANCH]=${CIRCLE_BRANCH} \
-            --data parameters[TEST_URL]=${TEST_URL} \
+            --silent \ # do not print request progress
+            --data parameters[TEST_BRANCH]=${GITHUB_HEAD_REF} \
+            --data parameters[TEST_URL]=${PREVIEW_URL} \
             https://circleci.com/api/v2/project/gh/bahmutov/todomvc-tests-circleci/pipeline
