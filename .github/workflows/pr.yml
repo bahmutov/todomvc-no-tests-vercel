@@ -3,7 +3,7 @@
 name: pull
 on: pull_request
 jobs:
-  set-status:
+  trigger-tests:
     runs-on: ubuntu-20.04
     steps:
       # trigger CircleCI pipeline to run E2E tests
