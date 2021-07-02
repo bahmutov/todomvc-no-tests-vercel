@@ -8,11 +8,13 @@ jobs:
     steps:
       # trigger CircleCI pipeline to run E2E tests
       # # https://circleci.com/docs/api/v2/#operation/triggerPipeline
+
       # the preview URL follows the format:
       # https://<project name>-git-<branch name>-<team name>.vercel.app/
+      # https://docs.github.com/en/actions/reference/environment-variables#default-environment-variables
       - name: Trigger CircleCI
         run: |
           export VERCEL_PROJECT_NAME=todomvc-no-tests-vercel
           export VERCEL_TEAM_NAME=gleb-bahmutov
-          export PREVIEW_URL=https://${VERCEL_PROJECT_NAME}-git-${BRANCH_NAME}-${VERCEL_TEAM_NAME}.vercel.app/
+          export PREVIEW_URL=https://${VERCEL_PROJECT_NAME}-git-${GITHUB_HEAD_REF}-${VERCEL_TEAM_NAME}.vercel.app/
           echo "Vercel deployment URL is ${PREVIEW_URL}"
