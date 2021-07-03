@@ -1,0 +1,13 @@
+# print info from deployment events sent by Vercel
+# https://glebbahmutov.com/blog/develop-preview-test/
+name: info
+# https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on: [deployment, deployment_status]
+jobs:
+  show-event:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
