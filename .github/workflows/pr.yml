@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       # trigger CircleCI pipeline to run E2E tests
-      # # https://circleci.com/docs/api/v2/#operation/triggerPipeline
+      # https://circleci.com/docs/api/v2/#operation/triggerPipeline
 
       # the preview URL follows the format:
       # https://<project name>-git-<branch name>-<team name>.vercel.app/

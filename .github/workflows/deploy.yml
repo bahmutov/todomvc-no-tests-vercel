@@ -4,7 +4,7 @@ jobs:
   trigger-tests-after-deploy:
     # only runs this job on successful deploy
     # https://glebbahmutov.com/blog/develop-preview-test/
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-20.04
     steps:
       # trigger CircleCI pipeline to run E2E tests
