@@ -21,4 +21,5 @@ jobs:
 
       - name: Compute branch name
         run: |
+          echo "current branch is: $(git branch -a)"
           git branch --no-color --format "%(refname:lstrip=2)" --contains ${{ github.sha }}
