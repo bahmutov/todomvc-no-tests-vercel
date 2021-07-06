@@ -26,6 +26,10 @@ jobs:
           git branch -a
           echo "HEAD branches"
           git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //'
+          echo "branches with commit"
+          git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/'
+          echo "one branch"
+          git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g'
           echo "maybe branch"
-          git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -v -e HEAD -e 'origin/'
-          # echo "current commit branch ${BRANCH_NAME}"
+          export BRANCH_NAME=$(git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g')
+          echo "current commit branch ${BRANCH_NAME}"
