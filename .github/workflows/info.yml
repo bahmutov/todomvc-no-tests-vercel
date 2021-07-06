@@ -22,6 +22,7 @@ jobs:
       # https://stackoverflow.com/questions/6059336/how-to-find-the-current-git-branch-in-detached-head-state
       - name: Compute branch name
         run: |
+          echo "Current commit ${{ github.sha }}"
           echo "all branches:"
           git branch -a
           echo "HEAD branches"
