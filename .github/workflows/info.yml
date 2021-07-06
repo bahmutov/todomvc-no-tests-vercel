@@ -12,6 +12,11 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
+      # to compute the branch name for the deployed commit
+      # need to grab the repo
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Compute branch name
         run: |
           git branch --no-color --format "%(refname:lstrip=2)" --contains ${{ github.sha }}
