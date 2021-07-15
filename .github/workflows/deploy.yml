@@ -7,6 +7,10 @@ jobs:
     if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-20.04
     steps:
+      # see if there is GITHUB_REF
+      - name: Check GITHUB_REF
+        run: |
+          echo "GITHUB_REF is ${GITHUB_REF}"
       # to compute the branch name for the deployed commit
       # need to grab the repo
       - name: Checkout
