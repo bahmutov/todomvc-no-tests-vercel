@@ -16,7 +16,7 @@ export function Todo({ todo, index, toggleTodo, removeTodo }) {
         <button data-cy={cyAttribute} onClick={() => toggleTodo(index)}>
           {toggleText}
         </button>
-        <button data-cy="remove" onClick={() => removeTodo(index)}>
+        <button data-cy="destroy" onClick={() => removeTodo(index)}>
           x
         </button>
       </div>
