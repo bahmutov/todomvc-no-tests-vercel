@@ -22,6 +22,7 @@ jobs:
           # --silent option to not print request progress
           curl -u ${{ secrets.CIRCLE_CI_API_TOKEN }}: \
             --silent \
+            --data branch=${GITHUB_HEAD_REF} \
             --data parameters[TEST_BRANCH]=${GITHUB_HEAD_REF} \
             --data parameters[TEST_URL]=${PREVIEW_URL} \
             https://circleci.com/api/v2/project/gh/bahmutov/todomvc-tests-circleci/pipeline
