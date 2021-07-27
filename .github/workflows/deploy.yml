@@ -37,7 +37,7 @@ jobs:
             --data branch=${BRANCH_NAME} \
             --data parameters[TEST_BRANCH]=${BRANCH_NAME} \
             --data parameters[TEST_URL]=${{ github.event.deployment_status.target_url }} \
-            ${TEST_PIPELINE_URL} | \
+            ${TEST_PIPELINE_URL} || \
           curl -u ${{ secrets.CIRCLE_CI_API_TOKEN }}: \
             --silent \
             --data parameters[TEST_BRANCH]=${BRANCH_NAME} \
