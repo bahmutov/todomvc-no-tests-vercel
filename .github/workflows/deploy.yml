@@ -28,10 +28,18 @@ jobs:
           export BRANCH_NAME=$(git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g')
           echo "Deployed branch ${BRANCH_NAME}"
 
+          export TEST_PIPELINE_URL=https://circleci.com/api/v2/project/gh/bahmutov/todomvc-tests-circleci/pipeline
           # --silent option to not print request progress
+          # if the test repo does not have branch with the same name
+          # trigger the default branch pipeline
           curl -u ${{ secrets.CIRCLE_CI_API_TOKEN }}: \
             --silent \
             --data branch=${BRANCH_NAME} \
             --data parameters[TEST_BRANCH]=${BRANCH_NAME} \
             --data parameters[TEST_URL]=${{ github.event.deployment_status.target_url }} \
-            https://circleci.com/api/v2/project/gh/bahmutov/todomvc-tests-circleci/pipeline
+            ${TEST_PIPELINE_URL} | \
+          curl -u ${{ secrets.CIRCLE_CI_API_TOKEN }}: \
+            --silent \
+            --data parameters[TEST_BRANCH]=${BRANCH_NAME} \
+            --data parameters[TEST_URL]=${{ github.event.deployment_status.target_url }} \
+            ${TEST_PIPELINE_URL}
