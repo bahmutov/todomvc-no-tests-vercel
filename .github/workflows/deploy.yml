@@ -43,3 +43,4 @@ jobs:
             --data parameters[TEST_BRANCH]=${BRANCH_NAME} \
             --data parameters[TEST_URL]=${{ github.event.deployment_status.target_url }} \
             ${TEST_PIPELINE_URL}
+          echo $?
