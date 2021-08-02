@@ -20,6 +20,25 @@ function App() {
     },
   ])
 
+  // async function fetchData() {
+  //   const response = await fetch(
+  //     'https://jsonplaceholder.typicode.com/todos?_limit=4',
+  //   )
+  //   const json = await response.json()
+  //   const todos = json.map((t) => ({
+  //     text: t.title,
+  //     isCompleted: t.completed,
+  //   }))
+  //   setTimeout(() => {
+  //     console.log('setting todos')
+  //     setTodos(todos)
+  //   }, 100)
+  // }
+
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
+
   if (window.Cypress) {
     window.todos = todos
   }
@@ -27,6 +46,7 @@ function App() {
   const addTodo = (text) => {
     const newTodos = [...todos, { text }]
     setTodos(newTodos)
+    console.log('added todo')
   }
 
   const toggleTodo = (index) => {
