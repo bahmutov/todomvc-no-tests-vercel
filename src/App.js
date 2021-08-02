@@ -1,61 +1,8 @@
 import React, { useState } from 'react'
+import { Todo } from './Todo'
+import { TodoForm } from './TodoForm'
+import { toggleOneTodo } from './utils'
 import './App.css'
-
-export function Todo({ todo, index, toggleTodo, removeTodo }) {
-  const toggleText = todo.isCompleted ? 'Redo' : 'Complete'
-  const cyAttribute = todo.isCompleted ? 'redo' : 'complete'
-  const className = todo.isCompleted ? 'todo completed' : 'todo'
-
-  return (
-    <div
-      className={className}
-      style={{ textDecoration: todo.isCompleted ? 'line-through' : '' }}
-    >
-      {todo.text}
-
-      <div>
-        <button data-cy={cyAttribute} onClick={() => toggleTodo(index)}>
-          {toggleText}
-        </button>
-        <button data-cy="remove" onClick={() => removeTodo(index)}>
-          x
-        </button>
-      </div>
-    </div>
-  )
-}
-
-export function TodoForm({ addTodo }) {
-  const [value, setValue] = useState('')
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!value) return
-    addTodo(value)
-    setValue('')
-  }
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        className="input"
-        data-cy="new-todo"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-    </form>
-  )
-}
-
-export const toggleOneTodo = (todos, index) => {
-  const newTodos = [...todos]
-  const todoToFlip = newTodos[index]
-  if (todoToFlip) {
-    todoToFlip.isCompleted = !todoToFlip.isCompleted
-  }
-  return newTodos
-}
 
 function App() {
   const [todos, setTodos] = useState([
@@ -73,6 +20,25 @@ function App() {
     },
   ])
 
+  // async function fetchData() {
+  //   const response = await fetch(
+  //     'https://jsonplaceholder.typicode.com/todos?_limit=4',
+  //   )
+  //   const json = await response.json()
+  //   const todos = json.map((t) => ({
+  //     text: t.title,
+  //     isCompleted: t.completed,
+  //   }))
+  //   setTimeout(() => {
+  //     console.log('setting todos')
+  //     setTodos(todos)
+  //   }, 100)
+  // }
+
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
+
   if (window.Cypress) {
     window.todos = todos
   }
@@ -80,6 +46,7 @@ function App() {
   const addTodo = (text) => {
     const newTodos = [...todos, { text }]
     setTodos(newTodos)
+    console.log('added todo')
   }
 
   const toggleTodo = (index) => {

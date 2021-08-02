@@ -20,6 +20,9 @@ jobs:
 
       # trigger CircleCI pipeline to run E2E tests
       # https://circleci.com/docs/api/v2/#operation/triggerPipeline
+      # trigger the run on the given branch first
+      # if the branch does not exist, try the default branch
+      # https://github.com/bahmutov/trigger-circleci-pipeline
       - name: Trigger CircleCI
         run: |
           echo "Vercel unique deployment URL is ${{ github.event.deployment_status.target_url }}"
@@ -28,18 +31,10 @@ jobs:
           export BRANCH_NAME=$(git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g')
           echo "Deployed branch ${BRANCH_NAME}"
 
-          export TEST_PIPELINE_URL=https://circleci.com/api/v2/project/gh/bahmutov/todomvc-tests-circleci/pipeline
-          # --silent option to not print request progress
-          # if the test repo does not have branch with the same name
-          # trigger the default branch pipeline
-          curl -u ${{ secrets.CIRCLE_CI_API_TOKEN }}: \
-            --silent \
-            --data branch=${BRANCH_NAME} \
-            --data parameters[TEST_BRANCH]=${BRANCH_NAME} \
-            --data parameters[TEST_URL]=${{ github.event.deployment_status.target_url }} \
-            ${TEST_PIPELINE_URL} || \
-          curl -u ${{ secrets.CIRCLE_CI_API_TOKEN }}: \
-            --silent \
-            --data parameters[TEST_BRANCH]=${BRANCH_NAME} \
-            --data parameters[TEST_URL]=${{ github.event.deployment_status.target_url }} \
-            ${TEST_PIPELINE_URL}
+          export TEST_URL=${{ github.event.deployment_status.target_url }}
+
+          npx trigger-circleci-pipeline \
+            --org bahmutov --project todomvc-tests-circleci --branch ${BRANCH_NAME} \
+            --parameters TEST_URL=${TEST_URL},TEST_BRANCH=${BRANCH_NAME}
+        env:
+          CIRCLE_CI_API_TOKEN: ${{ secrets.CIRCLE_CI_API_TOKEN }}
