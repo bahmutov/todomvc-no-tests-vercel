@@ -11,6 +11,11 @@ jobs:
       - name: Check GITHUB_REF
         run: |
           echo "GITHUB_REF is ${GITHUB_REF}"
+
+      - name: Print all GITHUB variables
+        # https://github.com/bahmutov/print-env
+        run: npx @bahmutov/print-env GITHUB_
+
       # to compute the branch name for the deployed commit
       # need to grab the repo
       - name: Checkout
